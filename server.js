@@ -1,5 +1,6 @@
 import express from 'express'
 import "dotenv/config"
+import cors from 'cors';
 
 const CONFIG_URL =  process.env.URL_Drone_Config ;
 const CONFIG_Log =  process.env.URL_Drone_Log ;
@@ -7,6 +8,22 @@ const AUTH_TOKEN = process.env.API_TOKEN;
 const port = process.env.PORT || 8000;
 
 const app = express();
+
+app.use(cors());
+const allowedOrigins = ['https://your-frontend-domain.vercel.app']; 
+
+app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST'], 
+    optionsSuccessStatus: 200 
+}));
+
 app.use(express.json());
 
 app.listen(port, () => {
