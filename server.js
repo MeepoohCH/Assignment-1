@@ -2,12 +2,12 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 
+const app = express();
 const CONFIG_URL = process.env.URL_Drone_Config;
 const CONFIG_Log = process.env.URL_Drone_Log;
 const AUTH_TOKEN = process.env.API_TOKEN;
 const port = process.env.PORT || 8000;
 
-const app = express();
 
 // ===================== 4 Middleware ===================== //
 
