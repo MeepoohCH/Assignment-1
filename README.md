@@ -55,7 +55,7 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
-// 3. Logging Middleware (Optional)
+// 3. Logging Middleware 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
