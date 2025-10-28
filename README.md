@@ -21,9 +21,54 @@ Create an API Server with Node.js &amp; Express.js
 ### 1. การตั้งค่าและการเชื่อมต่อ (Setup & Config)
 
   ```javascript
-  import express from 'express'       // นำเข้า Express framework สำหรับสร้าง Server
-  import "dotenv/config"              // โหลดตัวแปรสภาพแวดล้อมจากไฟล์ .env
-  import cors from 'cors';            //ใช้ CORS บน Express.js เพื่อให้ frontend สามารถเรียก API ได้ทั้งใน localhost และบน Vercel 
+import express from 'express';       // นำเข้า Express framework สำหรับสร้าง Server
+import "dotenv/config";              // โหลดตัวแปรสภาพแวดล้อมจากไฟล์ .env
+import cors from 'cors';             // ใช้ CORS บน Express.js เพื่อให้ frontend สามารถเรียก API ได้ทั้งใน localhost และบน Vercel
+
+const app = express();
+const CONFIG_URL = process.env.URL_Drone_Config;
+const LOG_URL = process.env.URL_Drone_Log;
+const AUTH_TOKEN = process.env.API_TOKEN;
+const PORT = process.env.PORT || 8000;
+
+// ===================== 4 Middleware ===================== //
+
+// 1. Body Parser Middleware
+app.use(express.json());
+
+// 2. CORS Middleware
+const allowedOrigins = [
+  'http://localhost:3000',                   // สำหรับ frontend บนเครื่องพัฒนา
+  'https://assignment-1-gray-two.vercel.app' // สำหรับ frontend ที่ deploy บน Vercel
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // อนุญาต request ที่ไม่มี origin เช่น curl
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],
+  optionsSuccessStatus: 200
+}));
+
+// 3. Logging Middleware (Optional)
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// 4. Error Handling Middleware
+app.use((err, req, res, next) => {
+  if (err.message === 'Not allowed by CORS') {
+    res.status(403).json({ error: err.message });
+  } else {
+    res.status(500).json({ error: err.message });
+  }
+});
   ```
 สามารถเรียกใช้ค่าจากไฟล์ `.env` ผ่านตัวแปร `process.env` ได้ดังนี้:
 
