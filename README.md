@@ -267,3 +267,26 @@ Create an API Server with Node.js &amp; Express.js
 การใช้ Bruno หรือ Postman จะทำให้คุณเห็น Response Code (200, 404, 201) และ Response Body ได้ชัดเจนมากที่สุด
 
    
+---
+
+## ☁️ Deployment บน Vercel
+
+โปรเจกต์นี้สามารถ deploy บน **Vercel** และเรียกใช้งานผ่าน Cloud ได้โดยไม่ต้องใช้ `localhost`
+
+- **ลิงก์ Vercel:** [https://assignment-1-gray-two.vercel.app/]
+- **การใช้งาน API ผ่าน Cloud:**  
+  เพียงเปลี่ยน URL จาก `http://localhost:8000` เป็น  https://assignment-1-gray-two.vercel.app/
+
+  เช่น:
+- GET Configs ของ Drone ID 66010125  
+  ```
+  https://assignment-1-gray-two.vercel.app/configs/66010125
+  ```
+- POST Log ใหม่  
+  ```
+  https://assignment-1-gray-two.vercel.app/logs
+  ```
+
+> 💡 **หมายเหตุ:**  
+> ระบบทำงานเหมือนกับบน localhost ทุกประการ ไม่ต้องปรับ Authentication เพิ่ม เพราะ Token ถูกกำหนดไว้ในโค้ดแล้ว
+
