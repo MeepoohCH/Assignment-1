@@ -22,7 +22,8 @@ Create an API Server with Node.js &amp; Express.js
 
   ```javascript
   import express from 'express'       // นำเข้า Express framework สำหรับสร้าง Server
-  import "dotenv/config"               // โหลดตัวแปรสภาพแวดล้อมจากไฟล์ .env
+  import "dotenv/config"              // โหลดตัวแปรสภาพแวดล้อมจากไฟล์ .env
+  import cors from 'cors';            //ใช้ CORS บน Express.js เพื่อให้ frontend สามารถเรียก API ได้ทั้งใน localhost และบน Vercel 
   ```
 สามารถเรียกใช้ค่าจากไฟล์ `.env` ผ่านตัวแปร `process.env` ได้ดังนี้:
 
@@ -94,7 +95,7 @@ Create an API Server with Node.js &amp; Express.js
   npm init -y
   
   # ติดตั้ง dependencies ที่จำเป็น
-  npm install express dotenv
+  npm install express dotenv cors
   
   ```
 ### 2. รันเซิร์ฟเวอร์
