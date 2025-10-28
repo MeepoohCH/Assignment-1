@@ -9,27 +9,44 @@ const port = process.env.PORT || 8000;
 
 const app = express();
 
-app.use(cors());
+// ===================== 4 Middleware ===================== //
+
+// 1. Body Parser Middleware
+app.use(express.json());
+
+// 2. CORS Middleware
 const allowedOrigins = [
-  "http://localhost:3000", // สำหรับ dev
-  "https://your-frontend-domain.vercel.app", // สำหรับ production
+'http://localhost:3000',                   // สำหรับ frontend บนเครื่องพัฒนา
+'https://assignment-1-gray-two.vercel.app' // สำหรับ frontend ที่ deploy บน Vercel
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST"],
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors({
+origin: function(origin, callback) {
+  if (!origin) return callback(null, true); // อนุญาต request ที่ไม่มี origin เช่น curl
+  if (allowedOrigins.includes(origin)) {
+    return callback(null, true);
+  } else {
+    return callback(new Error('Not allowed by CORS'));
+  }
+},
+methods: ['GET', 'POST'],
+optionsSuccessStatus: 200
+}));
 
-app.use(express.json());
+// 3. Logging Middleware (Optional)
+app.use((req, res, next) => {
+console.log(`${req.method} ${req.url}`);
+next();
+});
+
+// 4. Error Handling Middleware
+app.use((err, req, res, next) => {
+if (err.message === 'Not allowed by CORS') {
+  res.status(403).json({ error: err.message });
+} else {
+  res.status(500).json({ error: err.message });
+}
+});
 
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);
