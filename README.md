@@ -336,3 +336,5 @@ app.use((err, req, res, next) => {
 > 💡 **หมายเหตุ:**  
 > ระบบทำงานเหมือนกับบน localhost ทุกประการ ไม่ต้องปรับ Authentication เพิ่ม เพราะ Token ถูกกำหนดไว้ในโค้ดแล้ว
 
+## 👩‍💻 Author
+#### Chiratchaya Tangnamprasert Student ID: 66010125
