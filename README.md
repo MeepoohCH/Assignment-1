@@ -39,7 +39,7 @@ app.use(express.json());
 // 2. CORS Middleware
 const allowedOrigins = [
   'http://localhost:3000',                   // สำหรับ frontend บนเครื่องพัฒนา
-  'https://assignment-1-gray-two.vercel.app' // สำหรับ frontend ที่ deploy บน Vercel
+  'https://assignment-2-8468.vercel.app' // สำหรับ frontend ที่ deploy บน Vercel
 ];
 
 app.use(cors({
